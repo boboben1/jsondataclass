@@ -89,6 +89,11 @@ def desearialize_field(field_type: type[Generic] | GenericAlias | UnionType, fie
             for missing_item in item[1]:
                 missing_items.append(DataField(field_name=f"[{i}].{missing_item.field_name}" if missing_item.field_name else f"[{i}]", field_type=missing_item.field_type, in_list=True))
         return tuple([item[0] for item in data]), missing_items
+    elif get_origin(field_type) == Literal:
+        if field_value in get_args(field_type):
+            return field_value, []
+        else:
+            raise ValueError(f"Value {field_value} not in {field_type}")
     elif not isinstance(field_value, field_type):
         if field_value is None or issubclass(field_type, str) or issubclass(field_type, bool):
             return None, [DataField(field_name=None, field_type=field_type)]

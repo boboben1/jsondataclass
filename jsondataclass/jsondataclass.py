@@ -2,7 +2,7 @@ from types import NoneType, UnionType, GenericAlias
 import json
 from typing import NewType, TypeVar, Optional, get_origin, get_args, overload, Literal, Union
 from dataclasses import dataclass, field, fields, is_dataclass, _MISSING_TYPE, Field
-
+from enum import Enum
 
 DataClassType = TypeVar('DataClassType', bound=dataclass)
 TypeType = TypeVar('TypeType', bound=type)
@@ -94,6 +94,8 @@ def desearialize_field(field_type: type[Generic] | GenericAlias | UnionType, fie
             return field_value, []
         else:
             raise ValueError(f"Value {field_value} not in {field_type}")
+    elif isinstance(field_type, type) and issubclass(field_type, Enum):
+        return field_type(field_value), []
     elif not isinstance(field_value, field_type):
         if field_value is None or issubclass(field_type, str) or issubclass(field_type, bool):
             return None, [DataField(field_name=None, field_type=field_type)]
@@ -165,6 +167,8 @@ def value_to_json_serializable(field_value: Generic, field_metadata: dict) -> an
         return dataclass_to_dict(field_value)
     elif isinstance(field_value, tuple):
         return [value_to_json_serializable(item, {}) for item in field_value]
+    elif isinstance(field_value, Enum):
+        return field_value.value
     elif isinstance(field_value, list):
         return [value_to_json_serializable(item, {}) for item in field_value]
     elif is_json_serializable(field_value):

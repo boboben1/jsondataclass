@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='betterjsondataclasses',
+    name='betterjsdc',
     version='1.0.0',
     description='A better interface for transforming dataclasses to and from dictionaries.',
     author='Benjamin Brecher',

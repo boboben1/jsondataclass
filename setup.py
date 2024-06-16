@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='json-dataclass',
+    name='betterjsondataclasses',
     version='1.0.0',
     description='A better interface for transforming dataclasses to and from dictionaries.',
     author='Benjamin Brecher',
     author_email='brecherbenjamin@gmail.com',
-    url='https://github.com/your_username/your_project',
+    url='https://github.com/boboben1/jsondataclass',
     packages=find_packages(),
     install_requires=[
         # List your project dependencies here

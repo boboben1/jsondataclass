@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='jsondataclass',
+    name='json-dataclass',
     version='1.0.0',
     description='A better interface for transforming dataclasses to and from dictionaries.',
     author='Benjamin Brecher',
